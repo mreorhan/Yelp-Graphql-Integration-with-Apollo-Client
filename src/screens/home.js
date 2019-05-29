@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text, View, TextInput, Button, Alert } from 'react-native'
 import { EXAMPLE } from '../graphql/queries';
 import { Query } from "react-apollo";
 
 
 export default class Home extends Component {
-    getYelp({ term, location }) {
+    constructor(props) {
+        super(props);
+        this.state = {
+            term: "burrito",
+            location: "san francis"
+        }
+    }
+
+    getYelp = () => {
+        const { term, location } = this.state;
         return (
             <Query query={EXAMPLE} variables={{ term, location }}>
                 {({ loading, data: { search }, error }) => {
+
                     if (loading) {
                         return <Text>Loading...</Text>
                     }
@@ -33,11 +43,14 @@ export default class Home extends Component {
             </Query>
         )
     }
-    render() {
 
+    render() {
+        const { term } = this.state;
         return (
             <ScrollView>
-                {this.getYelp({ term: "burrito", location: "san francis" })}
+                <TextInput onChangeText={(term) => this.setState({ term })} value={term}></TextInput>
+                <Text>Result for: {this.state.term}</Text>
+                {this.getYelp("pizza", "new york")}
             </ScrollView>
         )
     }
