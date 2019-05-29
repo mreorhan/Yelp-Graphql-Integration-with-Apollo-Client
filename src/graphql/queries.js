@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const EXAMPLE = gql`
-{
-  search(term: "burrito", location: "san francisco") {
+  query Search($term: String!,$location:String!) {
+  search(term: $term, location: $location) {
     total
     business {
       name
