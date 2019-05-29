@@ -5,6 +5,7 @@ export const EXAMPLE = gql`
   search(term: $term, location: $location) {
     total
     business {
+      id
       name
       rating
       review_count
@@ -12,6 +13,17 @@ export const EXAMPLE = gql`
         address1
       }
     }
+  }
+}
+`;
+
+export const GET_REVIEWS = gql`
+query Reviews($business:String!){
+  reviews(business: $business) {
+    review {
+      text
+    }
+    total
   }
 }
 `;

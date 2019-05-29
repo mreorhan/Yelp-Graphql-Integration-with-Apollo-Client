@@ -6,7 +6,7 @@ import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 import { setContext } from "apollo-link-context";
 import { ApolloProvider } from 'react-apollo';
-import Home from './src/screens/home';
+import AppRoute from './routes';
 
 const authLink = setContext((_, { headers }) => {
   const token = "xVy99wBbL08Z4lgyaB4_SRR04EPfRK2CKtCKAE_F47vZDaUtJnlVmxmYPxR2cfRIVuLkwQyjZInDWuFNSCNvXeF4iTcveMPugsJsDAeZRO6GCDla-t7ujHTuv77uXHYx";
@@ -37,13 +37,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
+
 export default class App extends Component {
   render() {
-
-    console.log("process", JSON.stringify(process.env))
     return (
       <ApolloProvider client={client}>
-        <Home />
+        <AppRoute />
       </ApolloProvider>
     );
   }
