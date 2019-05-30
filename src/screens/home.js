@@ -21,12 +21,11 @@ export default class Home extends Component {
         const { navigate } = this.props.navigation;
         return (
             <Query query={EXAMPLE} variables={{ term, location }}>
-                {({ loading, data: { search }, error }) => {
-
+                {({ loading, error, data: { search } }) => {
                     if (loading)
                         return <Loader />
 
-                    if (search) {
+                    if (search && search.total!=0) {
                         const result = search.business.map((i, index) => {
                             return (
                                 <View key={index}>
@@ -38,6 +37,9 @@ export default class Home extends Component {
                         })
                         return result;
                     }
+                    if (search && search.total==0)
+                        return <Text>No result</Text>
+
                     if (error)
                         return <Error errorCode={error.message} />
 
