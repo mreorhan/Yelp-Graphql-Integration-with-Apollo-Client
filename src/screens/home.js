@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, View, TextInput, Button } from 'react-native'
+import { ScrollView, Text, View, TextInput, Button } from 'react-native';
 import { EXAMPLE } from '../graphql/queries';
 import { Query } from "react-apollo";
-import { margin } from '../styles/theme';
+import { Margin } from '../styles/theme';
+import { Loader } from '../components/loader';
+import { Error } from '../components/error';
 
 
 export default class Home extends Component {
@@ -21,9 +23,9 @@ export default class Home extends Component {
             <Query query={EXAMPLE} variables={{ term, location }}>
                 {({ loading, data: { search }, error }) => {
 
-                    if (loading) {
-                        return <Text>Loading...</Text>
-                    }
+                    if (loading)
+                        return <Loader />
+
                     if (search) {
                         const result = search.business.map((i, index) => {
                             return (
@@ -37,7 +39,7 @@ export default class Home extends Component {
                         return result;
                     }
                     if (error)
-                        return <Text>{error.message}</Text>
+                        return <Error errorCode={error.message} />
 
                     return (
                         <Text>No result</Text>
@@ -51,7 +53,7 @@ export default class Home extends Component {
         const { term } = this.state;
         return (
             <ScrollView>
-                <View style={margin.marginM}>
+                <View style={Margin.marginM}>
                     <TextInput onChangeText={(term) => this.setState({ term })} value={term}></TextInput>
                     <Text>Result for: {this.state.term}</Text>
                     {this.getYelp("pizza", "new york")}

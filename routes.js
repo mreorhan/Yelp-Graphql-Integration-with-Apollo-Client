@@ -10,10 +10,7 @@ const AppNavigator = createStackNavigator({
         }
     },
     Review: {
-        screen: Review,
-        navigationOptions: {
-            title: "Reviews",
-        }
+        screen: Review
     },
 }, {
         initialRouteName: 'Home',
